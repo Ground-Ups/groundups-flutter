@@ -1,8 +1,8 @@
-import 'package:customerapp/config/colors.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
-class AppBarBottom extends HookWidget {
+import 'package:flutter/material.dart';
+import 'package:ground_ups/config/colors.dart';
+
+class AppBarBottom extends StatelessWidget {
   final Widget child;
   const AppBarBottom({super.key,required this.child});
 

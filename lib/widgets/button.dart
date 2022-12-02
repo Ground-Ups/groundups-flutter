@@ -1,9 +1,8 @@
-import 'package:customerapp/common/utils/extensions.dart';
-import 'package:customerapp/config/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:ground_ups/config/colors.dart';
+import 'package:ground_ups/utils/extensions.dart';
 
-class Button extends HookWidget {
+class Button extends StatelessWidget {
   final Function()? onPressed;
   final ButtonType buttonType;
   final ButtonSize buttonSize;
@@ -81,14 +80,7 @@ enum ButtonSize {
   sm,
 }
 
-enum ButtonColor {
-  info,
-  primary,
-  warning,
-  danger,
-  success,
-  secondary
-}
+enum ButtonColor { info, primary, warning, danger, success, secondary }
 
 Widget textButton({
   required ButtonSize buttonSize,
@@ -119,6 +111,7 @@ Widget elevatedButtonPrimary({
   required BuildContext context,
   required ButtonColor buttonColor,
 }) {
+  Color? disableText;
   return SizedBox(
     width: isFullWidth! ? double.infinity : getWidth(buttonSize),
     height: getHeight(buttonSize),
@@ -127,7 +120,7 @@ Widget elevatedButtonPrimary({
       style: context.elevatedButtonTheme.style?.copyWith(
         foregroundColor: onPressed != null
             ? const MaterialStatePropertyAll(Colors.white)
-            : const MaterialStatePropertyAll(disableText),
+            : MaterialStatePropertyAll(disableText),
         backgroundColor: onPressed != null
             ? getColor(buttonColor: buttonColor)
             : const MaterialStatePropertyAll(disableBg),
@@ -156,9 +149,9 @@ Widget elevatedButtonSecondary({
             : const MaterialStatePropertyAll(disableText),
         backgroundColor: onPressed != null
             ? getColor(
-          buttonColor: buttonColor,
-          buttonType: ButtonType.elevatedSecondary,
-        )
+                buttonColor: buttonColor,
+                buttonType: ButtonType.elevatedSecondary,
+              )
             : const MaterialStatePropertyAll(disableBg),
       ),
       child: child,
@@ -231,11 +224,9 @@ MaterialStateProperty<Color?> getColor({
       return MaterialStatePropertyAll(info.shade50.withOpacity(.3));
     } else if (buttonColor == ButtonColor.warning) {
       return MaterialStatePropertyAll(warning.shade50);
-    }
-    else if (buttonColor == ButtonColor.secondary) {
+    } else if (buttonColor == ButtonColor.secondary) {
       return MaterialStatePropertyAll(secondary.shade50);
-    }
-    else {
+    } else {
       return MaterialStatePropertyAll(danger.shade50);
     }
   } else {
@@ -252,11 +243,9 @@ Color getColorOnly({required ButtonColor buttonColor}) {
     return info;
   } else if (buttonColor == ButtonColor.warning) {
     return warning;
-  }
-  else if (buttonColor == ButtonColor.secondary) {
+  } else if (buttonColor == ButtonColor.secondary) {
     return secondary;
-  }
-  else {
+  } else {
     return danger;
   }
 }

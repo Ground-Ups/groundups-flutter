@@ -1,13 +1,9 @@
-import 'package:customerapp/common/state/snack_bar/snack_bar_cubit.dart';
-import 'package:customerapp/common/widgets/layout/refresh_indicator.dart';
-import 'package:customerapp/common/widgets/snackbar.dart';
-import 'package:customerapp/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:ground_ups/config/colors.dart';
+import 'package:ground_ups/widgets/layout/refresh_indicator.dart';
 
-class Layout extends HookWidget {
+class Layout extends StatelessWidget {
   final List<Widget> body;
   final Widget? bottomNavigationBar;
   final Widget? bottomAppBar;
@@ -153,25 +149,13 @@ class Layout extends HookWidget {
                   ),
                 SliverList(
                   delegate: SliverChildListDelegate([
-                    BlocListener<SnackBarCubit, SnackBarState>(
-                      listener: (_, state) {
-                        if (state is SnackBarLoaded) {
-                          showSnackBar(
-                            builderContext: context,
-                            type: state.type,
-                            message: state.message,
-                            onPressed: state.onPressed,
-                          );
-                        }
-                      },
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.zero,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [...body],
-                        ),
+                    SingleChildScrollView(
+                      padding: EdgeInsets.zero,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [...body],
                       ),
-                    )
+                    ),
                   ]),
                 ),
               ],
@@ -279,28 +263,12 @@ class Layout extends HookWidget {
               ),
             SliverList(
               delegate: SliverChildListDelegate([
-                Builder(
-                  builder: (context) {
-                    return BlocListener<SnackBarCubit, SnackBarState>(
-                      listener: (_, state) {
-                        if (state is SnackBarLoaded) {
-                          showSnackBar(
-                            builderContext: context,
-                            type: state.type,
-                            message: state.message,
-                            onPressed: state.onPressed,
-                          );
-                        }
-                      },
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.zero,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [...body],
-                        ),
-                      ),
-                    );
-                  },
+                SingleChildScrollView(
+                  padding: EdgeInsets.zero,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [...body],
+                  ),
                 ),
               ]),
             ),

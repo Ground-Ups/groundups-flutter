@@ -1,5 +1,6 @@
-import 'package:customerapp/config/colors.dart';
+
 import 'package:flutter/material.dart';
+import 'package:ground_ups/config/colors.dart';
 
 enum SnackBarType {
   error,

@@ -1,6 +1,7 @@
-import 'package:customerapp/common/utils/extensions.dart';
-import 'package:customerapp/common/utils/funtion_utils.dart';
+
 import 'package:flutter/material.dart';
+import 'package:ground_ups/utils/extensions.dart';
+import 'package:ground_ups/utils/funtion_utils.dart';
 
 
 

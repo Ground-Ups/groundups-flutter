@@ -1,5 +1,5 @@
-import 'package:customerapp/config/const.dart';
 import 'package:flutter/material.dart';
+import 'package:ground_ups/config/const.dart';
 
 // HorizontalList widget is great when you don't want to give fix height to a item
 class HorizontalList extends StatelessWidget {
