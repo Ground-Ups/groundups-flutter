@@ -10,7 +10,7 @@ class GUImage extends StatelessWidget {
   double? ratio;
   BoxShape? shape;
   BoxBorder? border;
-  
+
   BorderRadiusGeometry? borderRadius;
   EdgeInsetsGeometry? margin;
   EdgeInsetsGeometry? padding;
@@ -31,15 +31,14 @@ class GUImage extends StatelessWidget {
     this.borderRadius,
     this.margin,
     this.padding,
-        this.colorFilter,
+    this.colorFilter,
     this.bgColor,
     this.fit,
-        this.child = const Text(''),
+    this.child = const Text(''),
   });
 
   @override
   Widget build(BuildContext context) {
-    bool isSvg = false;
     return Container(
       height: height,
       width: width ?? MediaQuery.of(context).size.width,
@@ -52,11 +51,8 @@ class GUImage extends StatelessWidget {
         color: bgColor,
         image: DecorationImage(
           fit: fit ?? BoxFit.fill,
-          colorFilter: colorFilter ?? const ColorFilter.mode(Colors.black26, BlendMode.colorBurn),
-          image: const GroundUpsSvg(
-            'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/ubuntu.svg',
-            source: SvgSource.network,
-          ),
+          colorFilter: colorFilter,
+          image: getImageProvider(src),
         ),
       ),
       child: child,
@@ -64,12 +60,34 @@ class GUImage extends StatelessWidget {
   }
 }
 
-// find link
-/*
-(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])*/
-
-//find svg code
-//<\s*svg[^>]*>(.*?)<\s*/\s*svg>
-
-// find .svg
-//\.(svg)(?:\?.*|)$
+ImageProvider<Object> getImageProvider(String src) {
+  final httpRegX = RegExp(
+    r'(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])',
+  );
+  final svgRegX = RegExp(r'<\s*svg[^>]*>(.*?)<\s*/\s*svg>');
+  final svgExtRegX = RegExp(r'\.(svg)(?:\?.*|)$');
+  if (httpRegX.hasMatch(src) && !svgRegX.hasMatch(src)) {
+    if (svgExtRegX.hasMatch(src)) {
+      return GroundUpsSvg(
+        src,
+        source: SvgSource.network,
+      );
+    } else {
+      return NetworkImage(src);
+    }
+  } else if (svgRegX.hasMatch(src)) {
+    //not working need to fix
+    return GroundUpsSvg(
+      src,
+      source: SvgSource.file,
+    );
+  } else {
+    if (svgExtRegX.hasMatch(src)) {
+      return GroundUpsSvg(
+        src,
+      );
+    } else {
+      return AssetImage(src);
+    }
+  }
+}

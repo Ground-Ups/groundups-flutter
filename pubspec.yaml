@@ -24,4 +24,7 @@ dev_dependencies:
   lint: ^2.0.1
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
+    - assets/images/
 

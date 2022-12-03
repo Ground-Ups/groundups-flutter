@@ -81,7 +81,7 @@ class GroundUpsSvg extends ImageProvider<SvgImageKey> {
 
   static Future<ImageInfo> _loadAsync(SvgImageKey key) async {
     final String rawSvg = await _getSvgString(key);
-    final DrawableRoot svgRoot = await svg.fromSvgString(rawSvg, key.path);
+    final DrawableRoot svgRoot = await svg.fromSvgString(rawSvg, rawSvg);
     final ui.Picture picture = svgRoot.toPicture(
       size: Size(
         key.pixelWidth.toDouble(),

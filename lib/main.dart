@@ -30,7 +30,13 @@ class Test extends StatelessWidget {
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(15),
-          child: GUImage('',height: 200, fit: BoxFit.fitHeight,),
+          child: Column(
+            children: [
+              GUImage('assets/images/1.jpg',height: 200, fit: BoxFit.fitHeight,),
+              GUImage('assets/images/docker-svgrepo-com.svg',height: 200, fit: BoxFit.fitHeight,),
+              GUImage('assets/images/docker-svgrepo-com.svg',height: 200, fit: BoxFit.fitHeight,),
+            ],
+          ),
         ),
       ),
     );
