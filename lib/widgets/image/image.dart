@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:ground_ups/widgets/image/groundUps_svg_provider.dart';
+import 'package:ground_ups/widgets/image/svg_decoration.dart';
 
 class GUImage extends StatelessWidget {
   final String src;
@@ -39,6 +39,18 @@ class GUImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final svgRegX = RegExp(r'<\s*svg[^>]*>(.*?)<\s*/\s*svg>');
+    if (svgRegX.hasMatch(src)) {
+      return Container(
+        height: height,
+        width: width ?? MediaQuery.of(context).size.width,
+        margin: margin,
+        padding: padding,
+        decoration:
+            SvgDecoration.string(src), // need to marge with ImageProvider
+        child: child,
+      );
+    }
     return Container(
       height: height,
       width: width ?? MediaQuery.of(context).size.width,
@@ -75,12 +87,6 @@ ImageProvider<Object> getImageProvider(String src) {
     } else {
       return NetworkImage(src);
     }
-  } else if (svgRegX.hasMatch(src)) {
-    //not working need to fix
-    return GroundUpsSvg(
-      src,
-      source: SvgSource.file,
-    );
   } else {
     if (svgExtRegX.hasMatch(src)) {
       return GroundUpsSvg(
