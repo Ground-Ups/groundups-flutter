@@ -5,14 +5,23 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SvgDecoration extends Decoration {
-  SvgDecoration.string(String rawSvg, {this.key, this.colorFilter,})
-      : rawSvgFuture = Future.value(rawSvg);
+  SvgDecoration.string(
+    String rawSvg, {
+    this.key,
+    this.colorFilter,
+  }) : rawSvgFuture = Future.value(rawSvg);
 
-  SvgDecoration.file(File file, {this.key, this.colorFilter,})
-      : rawSvgFuture = file.readAsString();
+  SvgDecoration.file(
+    File file, {
+    this.key,
+    this.colorFilter,
+  }) : rawSvgFuture = file.readAsString();
 
-  SvgDecoration.asset(String asset, {this.key, this.colorFilter,})
-      : rawSvgFuture = rootBundle.loadString(asset);
+  SvgDecoration.asset(
+    String asset, {
+    this.key,
+    this.colorFilter,
+  }) : rawSvgFuture = rootBundle.loadString(asset);
 
   final Future<String> rawSvgFuture;
   final String? key;
@@ -20,7 +29,7 @@ class SvgDecoration extends Decoration {
 
   @override
   BoxPainter createBoxPainter([VoidCallback? onChanged]) {
-    return _SvgDecorationPainter(rawSvgFuture, onChanged, key,colorFilter);
+    return _SvgDecorationPainter(rawSvgFuture, onChanged, key, colorFilter);
   }
 }
 
@@ -34,7 +43,12 @@ class _SvgDecorationPainter extends BoxPainter {
     rawSvgFuture
         .then((rawSvg) => svg.fromSvgString(rawSvg, key ?? '(no key)'))
         .then((d) {
-      drawable = d.mergeStyle(DrawableStyle());
+      drawable = d.mergeStyle(
+        DrawableStyle(
+          fill: DrawablePaint(PaintingStyle.fill, colorFilter: colorFilter,),
+
+        ),
+      );
       onChanged?.call();
     });
   }

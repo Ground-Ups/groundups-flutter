@@ -13,10 +13,7 @@ class GUImage extends StatelessWidget {
 
   BorderRadiusGeometry? borderRadius;
   EdgeInsetsGeometry? margin;
-  EdgeInsetsGeometry? padding;
-  Color? bgColor;
   ColorFilter? colorFilter;
-  BoxFit? fit;
 
   final Widget child;
 
@@ -30,10 +27,7 @@ class GUImage extends StatelessWidget {
     this.border,
     this.borderRadius,
     this.margin,
-    this.padding,
     this.colorFilter,
-    this.bgColor,
-    this.fit,
     this.child = const Text(''),
   });
 
@@ -45,29 +39,36 @@ class GUImage extends StatelessWidget {
         height: height,
         width: width ?? MediaQuery.of(context).size.width,
         margin: margin,
-        padding: padding,
-        decoration:
-            SvgDecoration.string(src), // need to marge with ImageProvider
-        child: child,
+        decoration: BoxDecoration(
+          shape: shape ?? BoxShape.rectangle,
+          borderRadius: borderRadius,
+          border: border,
+        ),
+        child: Container(
+          decoration:
+              SvgDecoration.string(src,colorFilter:colorFilter ), // need to marge with ImageProvider
+          child: child,
+        ),
       );
     }
-    return Container(
-      height: height,
-      width: width ?? MediaQuery.of(context).size.width,
-      margin: margin,
-      padding: padding,
-      decoration: BoxDecoration(
-        shape: shape ?? BoxShape.rectangle,
-        borderRadius: borderRadius,
-        border: border,
-        color: bgColor,
-        image: DecorationImage(
-          fit: fit ?? BoxFit.fill,
-          colorFilter: colorFilter,
-          image: getImageProvider(src),
+    return AspectRatio(
+      aspectRatio: ratio ?? 1,
+      child: Container(
+        height: height,
+        width: width ?? MediaQuery.of(context).size.width,
+        margin: margin,
+        decoration: BoxDecoration(
+          shape: shape ?? BoxShape.rectangle,
+          borderRadius: borderRadius,
+          border: border,
+          image: DecorationImage(
+            fit: BoxFit.fill,
+            colorFilter: colorFilter,
+            image: getImageProvider(src),
+          ),
         ),
+        child: child,
       ),
-      child: child,
     );
   }
 }
